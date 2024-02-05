@@ -1,0 +1,35 @@
+<!-- dialog-box.component.html -->
+<h1 mat-dialog-title><strong>{{action}} User</strong></h1>
+<mat-card class="box">
+    <form [formGroup]="userForm" class="example-form" (ngSubmit)="doAction()">
+        <mat-card-content>
+            <div mat-dialog-content *ngIf="action != 'Delete'; else elseTemplate">
+                <mat-form-field>
+                    <input placeholder="First Name" matInput formControlName="firstName" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input placeholder="Last Name" matInput formControlName="lastName" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input placeholder="Email" matInput formControlName="email" pattern="[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+(\.[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?" required>
+                </mat-form-field>
+                <mat-form-field *ngIf="action === 'Add'">
+                    <input placeholder="Password" type="password" matInput formControlName="password" required>
+                </mat-form-field>
+                <mat-form-field *ngIf="action === 'Add'">
+                    <input placeholder="Confirm" type="password" matInput formControlName="confirm" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input placeholder="Phone Number" matInput formControlName="phoneNumber">
+                </mat-form-field>
+            </div>
+            <ng-template #elseTemplate>
+                Sure to delete this user: <b>{{local_data.FirstName}} {{local_data.LastName}}</b>?
+            </ng-template>
+        </mat-card-content>
+        <div mat-dialog-actions>
+            <button mat-button type="submit" [disabled]="!userForm.valid">{{action}}</button>
+            <button mat-button type="button" (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+        </div>
+    </form>
+</mat-card>
